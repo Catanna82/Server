@@ -138,6 +138,10 @@ app.post('/api/login', function (req, res) {
         } else {
             if (data[0]) {
                 res.send({ userID: data[0]._id, isAdmin: data[0].admin });
+            } else {
+                res.send({
+                    password: 'Невалидна електронна поща или парола!'
+                })
             }
         }
     });
