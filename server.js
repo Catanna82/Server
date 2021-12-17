@@ -87,14 +87,27 @@ app.post('/api/SaveUser', function (req, res) {
             } else {
                 admin = false;
             }
-            const mod = new model({ ...req.body, admin });
-            mod.save(function (err, data) {
-                if (err) {
-                    res.send(err);
+            model.find({ email: req.body.email }, function (errEmail, dataEmail) {
+                if (errEmail) {
+                    res.send(errEmail);
                 } else {
-                    res.send({ data: 'Record has been Inserted..!!' });
+                    if (dataEmail.length) {
+                        res.send({
+                            regEmail: 'Електронната поща вече е регистрирана!'
+                        })
+                    } else {
+                        const mod = new model({ ...req.body, admin });
+                        mod.save(function (err, data) {
+                            if (err) {
+                                res.send(err);
+                            } else {
+                                res.send({});
+                            }
+                        });
+                    }
                 }
-            });
+            })
+
         }
     });
 });
