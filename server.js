@@ -367,9 +367,13 @@ app.post('/api/saveAlbums', function (req, res) {
                     if (err) {
                         res.send(err);
                     } else {
-                        res.send({ data: 'Record has been Inserted..!!' });
+                        res.send({});
                     }
                 });
+            } else {
+                res.send({
+                    albumName: 'Вече съществува албум с такова име!'
+                })
             }
         }
     });
